@@ -1,0 +1,124 @@
+$cellHeight: 40px;
+$outlineColor: #e9eaeb;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+#container {
+  padding: 1rem;
+  padding-top: 4rem;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#grid-container {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+
+#add-positions,
+#add-positions-duration {
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.05);
+}
+
+.positions-row {
+  text-align: center;
+  height: $cellHeight;
+
+  // expand across whole grid
+  width: 100%;
+  border: 0.5px solid #d3cfcc;
+}
+
+.positions-row button {
+  border: none;
+  height: $cellHeight;
+}
+
+.positions-row input {
+  width: 127px;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+#grid-container-positions .positions-row {
+  padding: 2px 0;
+}
+
+#grid-container-assignments {
+  display: grid;
+  overflow-x: auto;
+  background-color: rgb(248, 248, 248);
+}
+
+.assignment-period {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(40px, 1fr);
+  text-align: center;
+  height: $cellHeight;
+}
+
+.assignment-period span.time-mark {
+  margin: auto;
+}
+
+.assignment-period-cell-container {
+  grid-column: 1/-1;
+  display: grid;
+}
+
+.assignment-period-cell {
+  position: relative;
+  outline: 0.5px solid $outlineColor;
+}
+
+::ng-deep .assignment-bar {
+  position: absolute;
+  height: $cellHeight;
+  background: linear-gradient(
+    90deg,
+    rgb(224, 238, 246) 0%,
+    rgba(185, 211, 251, 1) 100%
+  );
+  border-radius: 5px;
+  cursor: move;
+  font-size: 12px;
+  text-align: center;
+  line-height: $cellHeight;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: rgb(53, 80, 121);
+  z-index: 1;
+
+  div.assignment-bar-inner {
+    display: flex;
+    justify-content: start;
+
+    mat-icon {
+      padding: 11px 4px 11px 0;
+      font-size: 18px;
+      color: rgb(53, 80, 121, 0.5);
+      height: unset;
+      width: unset;
+      overflow: unset;
+    }
+  }
+}
+
+::ng-deep .assignment-bar:focus {
+  outline: 1px dotted rgb(53, 80, 121);
+}
+
+::ng-deep .dragging {
+  opacity: 0.5;
+  z-index: 0;
+}

@@ -1,0 +1,70 @@
+<div id="container">
+  <div id="grid-container">
+    <div id="grid-container-positions">
+      <div class="positions-row"></div>
+      @for (p of positions; track p) {
+      <div class="positions-row">
+        <span style="font-size: small">{{ p.title }}</span>
+      </div>
+      }
+    </div>
+
+    <div
+      id="grid-container-assignments"
+      [ngStyle]="{
+        'grid-template-columns': 'repeat(' + timeMarks.length + ', 1fr)'
+      }">
+      @for (mark of timeMarks; let i = $index; track mark) {
+      <div class="assignment-period">
+        <span class="time-mark" style="font-size: x-small; margin-left: -15px">{{
+          i === 0 ? "" : mark
+        }}</span>
+      </div>
+      }
+
+      <!-- Assignment Cells  -->
+      @for (p of positions; track p) {
+      <div
+        class="assignment-period-cell-container"
+        (dragenter)="onDragEnter($event)"
+        (dragover)="onDragOver($event)"
+        [ngStyle]="{
+          'grid-template-columns': 'repeat(' + timeMarks.length + ', 1fr)'
+        }"
+      >
+        @for (mark of timeMarks; track mark) {
+        <div class="assignment-period">
+          <div
+            class="assignment-period-cell"
+            [attr.data-position-id]="p.id"
+            [attr.data-time-mark]="mark"
+            (drop)="onDrop($event)"
+          >
+          @if (isAssignmentStart(p, mark)) {
+            @let a = getAssignment(p, mark);
+            <div
+              [id]="a.id"
+              class="assignment-bar"
+              draggable="true"
+              tabindex="0"
+              (dblclick)="onDblClick(a)"
+              (keydown)="onKeyDown($event)"
+              (dragstart)="onDragStart($event)"
+              (dragend)="onDragEnd($event)"
+              (dragenter)="onDragEnter($event)"
+              (dragover)="onDragOver($event)"
+              [ngStyle]="{ width: getAssignmentBarWidth(a) }">
+              <div class="assignment-bar-inner">
+                <mat-icon class="material-icons">drag_indicator</mat-icon>
+                <span>{{ a.description }}</span>
+              </div>
+            </div>
+          }
+          </div>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</div>
